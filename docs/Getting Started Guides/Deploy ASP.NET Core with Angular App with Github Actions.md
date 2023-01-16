@@ -13,7 +13,7 @@ This article outlines the steps required to build and deploy a `ASP.NET Core wit
 
 ## Steps
 
-### 1. Create Repository in Github.
+### 1. Create Repository in Github
 
 Log into [https://github.com](https://github.com) and create a repository.
 
@@ -23,31 +23,51 @@ Log into [https://github.com](https://github.com) and create a repository.
 PS> git clone ...
 ```
 
-### 3. Create branches following gitflow.
+### 3. Create branches following gitflow
 
-1. main/develop/test
+**Branches:**
 
-### 4. Create `ASP.NET Core with Angular` application locally.
+1. `main`
+2. `develop`
+3. `test`
+
+**Using SourceTree**
+
+1. Open SourceTree application.
+2. Click on `+` button to add new repository.
+3. Browse to locally cloned repo.
+4. Click OK button.
+    1. Repo's is now being tracked in SourceTree.
+5. Click on `Git-flow` button, in the top-right, to automate the creation of branches.
+6. Change `master` to `main`.
+    1. This is a `main` is now being used as convention.
+7. Push newly created branches into the remote repository.
+    1. Make sure to check the checkboxes the newly created branches.
+
+### 4. Create `ASP.NET Core with Angular` application locally
 
 1. Verify application works using default configuration.
 2. Just use the `Start Debugging` button in Visual Studio Community.
 
-### 5. Create `Resource Group` in Azure.
+### 5. Create `Resource Group` in Azure
 
-1. NOTES
-   1. We'll create a Resource Group (RG) per web application for now to make management of the entire system self-contained.
-2. STEPS
-   1. Log into Azure Portal: [https://portal.azure.com](https://portal.azure.com).
-   2. Home > Resource groups > Create
-   3. Fill in details:
-      1. Subscription: Pay-As-You-Go
-      2. Resource Group: "Dev-RG"
-      3. Region: "Australia East"
-   4. Click "Review + create" button.
-   5. Click "Create".
-   6. Resource group "Dev-RG" is now created.
+**NOTES**
 
-### 6. Create `App Azure App Service Plan`.
+1. We'll create a Resource Group (RG) per web application for now to make management of the entire system self-contained.
+
+**STEPS**
+
+1. Log into Azure Portal: [https://portal.azure.com](https://portal.azure.com).
+2. Home > Resource groups > Create
+3. Fill in details:
+   1. Subscription: Pay-As-You-Go
+   2. Resource Group: "Dev-RG"
+   3. Region: "Australia East"
+4. Click "Review + create" button.
+5. Click "Create".
+6. Resource group "Dev-RG" is now created.
+
+### 6. Create `App Azure App Service Plan`
 
 1. Home > Azure Service Plans > Create
 2. Fill in details:
@@ -61,7 +81,7 @@ PS> git clone ...
    6. Click "Review + create" button.
    7. Click "Create".
 
-### 7. Create `web app` in Azure.
+### 7. Create `web app` in Azure
 
 1.  Home > App Services > Create.
 2.  Fill in details:
@@ -90,21 +110,22 @@ PS> git clone ...
           1. 'Yes' is the default.
 3.  Click "Review + Create".
 4.  Click "Create".
-
 5.  Confirm the web app is now live.
     1.  Open web browser and navigate to [https://DocNumberManager-kentomas.azurewebsites.net](https://DocNumberManager-kentomas.azurewebsites.net)
 
-### 8. Generate deployment credentials.
+### 8. Generate deployment credentials
 
-1.  We'll follow the "Publish Profile" method. [Read more](https://learn.microsoft.com/en-us/azure/app-service/deploy-github-actions?tabs=applevel#generate-deployment-credentials)
-2.  Steps
-    1. In Azure, navigate to App Service.
-       1. Home > App Services > DocNumberManager-kentomas > Overview
-    2. Click on "Get publish profile" button.
-       1. This will download a file called "DocNumberManager-kentomas.PublishSettings".
-       2. The contents of this file will be pasted into Github as a "secret".
+We'll follow the "Publish Profile" method. [Read more](https://learn.microsoft.com/en-us/azure/app-service/deploy-github-actions?tabs=applevel#generate-deployment-credentials)
 
-### 9. Create new Github secret for repo.
+**Steps**
+
+1. In Azure, navigate to App Service.
+   1. Home > App Services > DocNumberManager-kentomas > Overview
+2. Click on "Get publish profile" button.
+   1. This will download a file called "DocNumberManager-kentomas.PublishSettings".
+   2. The contents of this file will be pasted into Github as a "secret".
+
+### 9. Create new Github secret for repo
 
 1. Steps
    1. Log in to [https://github.com](https://github.com).
@@ -126,61 +147,62 @@ This step is OPTIONAL.
 
 Environments production, staging, test, and development.
 
-### 11. Create the Github Workflow.
+### 11. Create the Github Workflow
 
-1. Steps:
-    1. On the website Github, within the repo DocNumberManager, click on "Actions".
-    2. Click on "New workflow".
-    3. Deployment > Deploy a .NET Core app to an Azure Web App > Configure (button)
-        1. This will open a new file created in the branch 'main'.
-            1. DocNumberManager/.github/workflows/azure-webapps-dotnet-core.yml
-    4. Fill in the following fields:
-        1. env
-            1. AZURE_WEBAPP_NAME: DocNumberManager-kentomas
-            2. DOTNET_VERSION: 7
-            3. This is from the Visual Studio Project Properties.
-    5. Remove the environment field since we did not create an Github environment. ([Read more](https://docs.github.com/en/actions/deployment/deploying-to-your-cloud-provider/deploying-to-azure/deploying-net-to-azure-app-service#creating-the-workflow))
-        1. jobs > deploy > environment.
-            1. Delete all the sub structures of this variable.
-    6. Click "Start commit" button.
-    7. A new file is now created on the `main` branch.
+**Steps:**
 
-NOTE:
+1. On the website Github, within the repo DocNumberManager, click on "Actions".
+2. Click on "New workflow".
+3. Deployment > Deploy a .NET Core app to an Azure Web App > Configure (button)
+    1. This will open a new file created in the branch 'main'.
+        1. DocNumberManager/.github/workflows/azure-webapps-dotnet-core.yml
+4. Fill in the following fields:
+    1. env
+        1. AZURE_WEBAPP_NAME: DocNumberManager-kentomas
+        2. DOTNET_VERSION: 7
+        3. This is from the Visual Studio Project Properties.
+5. Remove the environment field since we did not create an Github environment. ([Read more](https://docs.github.com/en/actions/deployment/deploying-to-your-cloud-provider/deploying-to-azure/deploying-net-to-azure-app-service#creating-the-workflow))
+    1. jobs > deploy > environment.
+        1. Delete all the sub structures of this variable.
+6. Click "Start commit" button.
+7. A new file is now created on the `main` branch.
 
-    1. This workflow will be launched after this file is created and committed into `main`.
-    2. This workflow will fail because our `main` branch does not contain our web app yet.
+**NOTE:**
 
-### 12. Merge `main` branch with `develop` branch.
+1. This workflow will be launched after this file is created and committed into `main`.
+2. This workflow will fail because our `main` branch does not contain our web app yet.
 
-1. This will copy the newly created workflow file into the `develop` branch.
-2. Steps:
+### 12. Merge `main` branch with `develop` branch
 
-   1. Go into SourceTree.
-   2. Change branch to `main`.
-   3. Pull.
-   4. Change branch to `develop`.
-   5. Merge `main` into `develop`.
+This will copy the newly created workflow file into the `develop` branch.
 
-3. Confirm the web app still works locally after the merge.
-   1. Open the VS Solution.
-   2. Debug app.
+**Steps:**
+
+1. Go into SourceTree.
+2. Change branch to `main`.
+3. Pull.
+4. Change branch to `develop`.
+5. Merge `main` into `develop`.
+6. Confirm the web app still works locally after the merge.
+    1. Open the VS Solution.
+    2. Debug app.
 
 ### 13. Create Pull Request
 
 1.  In Github, create a Pull-Request to merge `develop` branch into `main` branch.
     1. Click on `Pull requests`.
     2. Click "Compare & pull request".
-    3. Confirm the Pull request states: "... wants to merge 'x' commits into `main` from `develop`.
+    3. Confirm the Pull request states: "... wants to merge 'x' commits into `main` from `develop`".
     4. Fill in details:
-       1. Name: "Initial deployment"
-       2. Description: "Initial deployment of default ASP.NET Core with Angular website."
+        1. Name: "Initial deployment"
+        2. Description: "Initial deployment of default ASP.NET Core with Angular website."
     5. Click "Create pull request".
 
 ### 14. Complete Pull Request.
 
-    1. Review code changes.
-    2. Click "Merge pull request".
-    3. Click "Confirm merge" button.
+1. Review code changes.
+2. Click "Merge pull request".
+3. Click "Confirm merge" button.
 
 ### 15. Confirm deployment
 
