@@ -1,8 +1,12 @@
 # Azure Application Insights
 
+## Overview
+
 The [Microsoft.Extensions.Logging.ApplicationInsights](https://www.nuget.org/packages/Microsoft.Extensions.Logging.ApplicationInsights) provider package writes logs to [Azure Application Insights](https://learn.microsoft.com/en-us/azure/azure-monitor/app/cloudservices). Application Insights is a service that monitors a web app and provides tools for querying and analyzing the telemetry data. If you use this provider, you can query and analyze your logs by using the Application Insights tools.
 
 The logging provider is included as a dependency of [Microsoft.ApplicationInsights.AspNetCore](https://www.nuget.org/packages/Microsoft.ApplicationInsights.AspNetCore), which is the package that provides all available telemetry for ASP.NET Core. If you use this package, you don't have to install the provider package.
+
+## Configuration and Usage
 
 General Configuration Steps:
 
@@ -68,4 +72,34 @@ app.UseRouting();
 }
 ```
 
-Reference: [Application Insights logging with .NET](https://learn.microsoft.com/en-us/azure/azure-monitor/app/ilogger)
+## FAQ
+
+- Should I include Azure Application Insights at the beginning of development? or at the end when the application is working?
+
+  It is generally recommended to include Azure Application Insights at the beginning of development, as it can help you monitor the performance, usage, and availability of your application throughout the development process.
+
+  By including Application Insights early on, you can catch and diagnose issues early, which can save you time and effort in the long run. You can also use the data collected by Application Insights to make decisions about the design and architecture of your application, such as which components are performing well and which need to be optimized.
+
+  Additionally, Application Insights provides a wide range of features, including monitoring of requests and dependencies, performance profiling, and custom telemetry that can be used to track the usage of your application and identify any potential issues that may arise with the usage.
+
+  However, if you're already in the testing or production stage, it's not too late to include Application Insights, and you can still benefit from it. It will help you to monitor the performance, usage, and availability of your application in production, and identify and diagnose issues that may arise.
+
+  Overall, including Azure Application Insights early on in the development process can help you catch and diagnose issues early, but it can also be beneficial even if you include it later in the development process.
+
+- How can I reduce the cost of using Azure Application Insights?
+
+There are several ways to reduce the cost of using Azure Application Insights:
+
+1. Use the pricing calculator: Azure provides a pricing calculator that can help you estimate the cost of using Application Insights based on your specific usage. This can help you identify areas where you can reduce costs.
+2. Use the appropriate pricing tier: Application Insights has three pricing tiers: Free, Basic, and Standard. The Free tier provides basic features and is suitable for small projects, while the Basic and Standard tiers provide more advanced features and are suitable for larger projects. Choose the appropriate tier based on your needs.
+3. Use sampling: Sampling is a feature that allows you to collect a subset of data, rather than all of it. This can help you reduce costs by reducing the amount of data that is stored and analyzed.
+4. Use Retention policies: Retention policies allow you to control how long data is kept in the service. By reducing the retention period, you can reduce the amount of data that is stored and analyzed, which can help you reduce costs.
+5. Use Metrics Explorer: Metrics Explorer is a feature that allows you to analyze metrics and performance data in real-time, and you can use it to identify and troubleshoot performance issues. You can use this feature to reduce costs by identifying and resolving performance issues before they become a problem.
+6. Use Azure Monitor Workbooks: Azure Monitor Workbooks allow you to create and share interactive and customizable visualizations of your data. This can help you to identify patterns and trends in your data, which can help you reduce costs by identifying and resolving issues early.
+
+Overall, using a combination of the above methods can help you reduce the cost of using Azure Application Insights while still gaining the insights and monitoring that you need to run your application efficiently.
+
+## References
+
+- [Application Insights logging with .NET](https://learn.microsoft.com/en-us/azure/azure-monitor/app/ilogger)
+- [Azure Application Insights — How not to burn money using it](https://medium.com/@beyerleinf/azure-application-insights-how-not-to-burn-money-using-it-5f1bbe5816b4)
