@@ -2,7 +2,6 @@
 
 This article is an abstract of the information provided in [Logging in .NET Core and ASP.NET Core](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/logging/?view=aspnetcore-7.0).
 
-
 ## Log Levels
 
 | LogLevel      | Value | Method         | Description                                                                                                                                                        |
@@ -15,6 +14,39 @@ This article is an abstract of the information provided in [Logging in .NET Core
 | `Critical`    | 5     | LogCritical    | For failures that require immediate attention. Examples: data loss scenarios, out of disk space.                                                                   |
 | `None`        | 6     |                | Specifies that a logging category shouldn't write messages.                                                                                                        |
 
+In the previous table, the `LogLevel` is listed from lowest to highest severity.
+
+The `Log` method's first parameter, `LogLevel`, indicates the severity of the log. Rather than calling `Log(LogLevel, ...)`, most developers call the `Log{LOG LEVEL}` extension methods, where the `{LOG LEVEL}` placeholder is the log level. For example, the following two logging calls are functionally equivalent and produce the same log:
+
+```cs title="C#" hl_lines="6-7"
+[HttpGet]
+public IActionResult Test1(int id)
+{
+    var routeInfo = ControllerContext.ToCtxString(id);
+
+    _logger.Log(LogLevel.Information, MyLogEvents.TestItem, routeInfo);
+    _logger.LogInformation(MyLogEvents.TestItem, routeInfo);
+
+    return ControllerContext.MyDisplayRouteInfo();
+}
+```
+
+`MyLogEvents.TestItem` is the event ID. `MyLogEvents` is part of the sample app and is displayed in the Log event ID section.
+
+If the `default` `log level` is not set, the default log level value is `Information`.
+
+Generally, log levels should be specified in configuration and not code.
+
+## Logging output
+
+Logs created with the default logging providers are displayed:
+
+- In Visual Studio
+  - In the Debug output window when debugging.
+  - In the ASP.NET Core Web Server window.
+- In the console window when the app is run with `dotnet run`.
+
+Logs that begin with "Microsoft" categories are from ASP.NET Core framework code. ASP.NET Core and application code use the same logging API and providers.
 
 ## Logging providers
 
@@ -26,10 +58,10 @@ The default ASP.NET Core web app templates:
 
 - Use the `Generic Host`.
 - Call `WebApplication.CreateBuilder`, which adds the following logging providers:
-    - `Console`
-    - `Debug`
-    - `EventSource`
-    - `EventLog`: Windows only
+  - `Console`
+  - `Debug`
+  - `EventSource`
+  - `EventLog`: Windows only
 
 Third-Party Logging providers:
 
@@ -46,7 +78,7 @@ Third-Party Logging providers:
     - For example, in a controller the name might be `"TodoApi.Controllers.TodoController"`.
     - The ASP.NET Core web apps use `ILogger<T>` to automatically get an ILogger instance that uses the fully qualified type name of T as the category:
 
-``` cs title="C#" hl_lines="2 6 8"
+```cs title="C#" hl_lines="2 6 8"
 // FILE: PrivacyModel.cs
 namespace TodoApi.Models
 {
@@ -67,14 +99,14 @@ namespace TodoApi.Models
 }
 ```
 
-``` json title="JSON" hl_lines="7"
+```json title="JSON" hl_lines="7"
 // FILE: appsettings.json
 {
   "Logging": {
     "LogLevel": {
-         "Default": "Information",
-         "Microsoft.AspNetCore": "Warning",
-         "TodoApi.Models.PrivacyModel" : "Warning"
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning",
+      "TodoApi.Models.PrivacyModel": "Warning"
     }
   }
 }
@@ -90,8 +122,8 @@ namespace TodoApi.Models
 {
   "Logging": {
     "LogLevel": {
-         "Default": "Information",
-         "Microsoft.AspNetCore": "Warning"
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
     }
   }
 }
@@ -115,99 +147,283 @@ We will use:
 - `Staging`: appsettings.staging.json
 - `Production`: appsettings.production.json
 
+==TODO:== Workout how the switching between these JSON files works such that the correct appsettings is used in the deployed environment.
+
 ### Console
 
 The Console provider logs output to the console.
 
 > NOTE: Remember to update `appsettings.json` to ensure the `classes` with logging are visible.
 
-``` cs title="C#"
+```cs title="C#" hl_lines="3"
 // FILE: Program.cs
 var builder = WebApplication.CreateBuilder(args);
 builder.Logging.AddConsole();
 ```
 
+```log title="Console Log Sample"
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/2 GET https://localhost:5001/Privacy
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint '/Privacy'
+info: Microsoft.AspNetCore.Mvc.RazorPages.Infrastructure.PageActionInvoker[3]
+      Route matched with {page = "/Privacy"}. Executing page /Privacy
+info: Microsoft.AspNetCore.Mvc.RazorPages.Infrastructure.PageActionInvoker[101]
+      Executing handler method DefaultRP.Pages.PrivacyModel.OnGet - ModelState is Valid
+info: Microsoft.AspNetCore.Mvc.RazorPages.Infrastructure.PageActionInvoker[102]
+      Executed handler method OnGet, returned result .
+info: Microsoft.AspNetCore.Mvc.RazorPages.Infrastructure.PageActionInvoker[103]
+      Executing an implicit handler method - ModelState is Valid
+info: Microsoft.AspNetCore.Mvc.RazorPages.Infrastructure.PageActionInvoker[104]
+      Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+info: Microsoft.AspNetCore.Mvc.RazorPages.Infrastructure.PageActionInvoker[4]
+      Executed page /Privacy in 74.5188ms
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint '/Privacy'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished in 149.3023ms 200 text/html; charset=utf-8
+```
 
+### Windows EventLog
+
+The `EventLog` provider sends log output to the Windows Event Log. Unlike the other providers, the `EventLog` provider does not inherit the default non-provider settings. If `EventLog` log settings **aren't** specified, they default to LogLevel.Warning.
+
+To log events lower than `LogLevel.Warning`, explicitly set the log level. The following example sets the Event Log default log level to LogLevel.Information:
+
+```json title="JSON" hl_lines="3-5"
+// FILE: appsettings.json
+"Logging": {
+  "EventLog": {
+    "LogLevel": {
+      "Default": "Information"
+    }
+  }
+}
+```
+
+`AddEventLog` overloads can pass in `EventLogSettings`. If `null` or not specified, the following default settings are used:
+
+- `LogName`: "Application"
+- `SourceName`: ".NET Runtime"
+- `MachineName`: The local machine name is used.
+
+The following code changes the `SourceName` from the default value of `".NET Runtime"` to `MyLogs`:
+
+```cs title="C#" hl_lines="3-6"
+// FILE: Program.cs
+var builder = WebApplication.CreateBuilder();
+builder.Logging.AddEventLog(eventLogSettings =>
+{
+    eventLogSettings.SourceName = "MyLogs";
+});
+```
+
+### Azure App Service
+
+The [Microsoft.Extensions.Logging.AzureAppServices](https://www.nuget.org/packages/Microsoft.Extensions.Logging.AzureAppServices) provider package writes logs to text files in an Azure App Service app's file system and to [blob storage](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-dotnet#what-is-blob-storage) in an Azure Storage account.
+
+The provider package **isn't** included in the shared framework. To use the provider, add the provider package to the project.
+
+To configure provider settings, use [AzureFileLoggerOptions](https://learn.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.azureappservices.azurefileloggeroptions) and [AzureBlobLoggerOptions](https://learn.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.azureappservices.azureblobloggeroptions), as shown in the following example:
+
+```cs title="C#"
+// FILE: Program.cs
+using Microsoft.Extensions.Logging.AzureAppServices;
+
+var builder = WebApplication.CreateBuilder();
+builder.Logging.AddAzureWebAppDiagnostics();
+builder.Services.Configure<AzureFileLoggerOptions>(options =>
+{
+    options.FileName = "azure-diagnostics-";
+    options.FileSizeLimit = 50 * 1024;
+    options.RetainedFileCountLimit = 5;
+});
+builder.Services.Configure<AzureBlobLoggerOptions>(options =>
+{
+    options.BlobName = "log.txt";
+});
+```
+
+When deployed to Azure App Service, the app uses the settings in the [App Service logs](https://learn.microsoft.com/en-us/azure/app-service/web-sites-enable-diagnostic-log/#enable-application-logging-windows) section of the App Service page of the Azure portal. When the following settings are updated, the changes take effect immediately without requiring a restart or redeployment of the app.
+
+- Application Logging (Filesystem)
+- Application Logging (Blob)
+
+Default Configurations:
+
+- Location: `D:\\home\\LogFiles\\Application`
+- Filename: `diagnostics-yyyymmdd.txt`
+- File Size Limit: `10 MB`
+- Max Num Files Retained: `2`
+- Blob Name: `{app-name}{timestamp}/yyyy/mm/dd/hh/{guid}-applicationLog.txt`
+
+This `provider only logs` when the project runs in the Azure environment.
+
+`Azure log streaming` supports viewing log activity in real time from:
+
+- The app server
+- The web server
+- Failed request tracing
+
+To configure `Azure log streaming`:
+
+- Navigate to the App Service logs page from the app's portal page.
+- Set Application Logging (Filesystem) to On.
+- Choose the log Level. This setting only applies to Azure log streaming.
+
+Navigate to the Log Stream page to view logs. The logged messages are logged with the ILogger interface.
+
+### Azure Application Insights
+
+The [Microsoft.Extensions.Logging.ApplicationInsights](https://www.nuget.org/packages/Microsoft.Extensions.Logging.ApplicationInsights) provider package writes logs to [Azure Application Insights](https://learn.microsoft.com/en-us/azure/azure-monitor/app/cloudservices). Application Insights is a service that monitors a web app and provides tools for querying and analyzing the telemetry data. If you use this provider, you can query and analyze your logs by using the Application Insights tools.
+
+The logging provider is included as a dependency of [Microsoft.ApplicationInsights.AspNetCore](https://www.nuget.org/packages/Microsoft.ApplicationInsights.AspNetCore), which is the package that provides all available telemetry for ASP.NET Core. If you use this package, you don't have to install the provider package.
+
+General Configuration Steps:
+
+1. In Visual Studio, right-click on the Project, and select `"Configure Application Insights..."`.
+2. Follow prompt for configuration. This will require a subscription. It can be a Pay-As-You-Go subscription.
+   1. This will install `nuget packages`, update the `appsettings.json` file, and update `program.cs` file.
+3. Debug web application.
+4. Click on new `Application Insights` toolbar button to view captured stats.
+
+Reference: [Application Insights logging with .NET](https://learn.microsoft.com/en-us/azure/azure-monitor/app/ilogger)
 
 ## Log Event ID
 
+Each log can specify an event ID. The sample app uses the MyLogEvents class to define event IDs:
+
+```cs title="C#"
+public class MyLogEvents
+{
+    public const int GenerateItems = 1000;
+    public const int ListItems     = 1001;
+    public const int GetItem       = 1002;
+    public const int InsertItem    = 1003;
+    public const int UpdateItem    = 1004;
+    public const int DeleteItem    = 1005;
+
+    public const int TestItem      = 3000;
+
+    public const int GetItemNotFound    = 4000;
+    public const int UpdateItemNotFound = 4001;
+}
+```
+
+```cs title="C#" hl_lines="4 10"
+[HttpGet("{id}")]
+public async Task<ActionResult<TodoItemDTO>> GetTodoItem(long id)
+{
+    _logger.LogInformation(MyLogEvents.GetItem, "Getting item {Id}", id);
+
+    var todoItem = await _context.TodoItems.FindAsync(id);
+
+    if (todoItem == null)
+    {
+        _logger.LogWarning(MyLogEvents.GetItemNotFound, "Get({Id}) NOT FOUND", id);
+        return NotFound();
+    }
+
+    return ItemToDTO(todoItem);
+}
+```
+
+An event ID associates a set of events. For example, all logs related to displaying a list of items on a page might be 1001.
+
+The logging provider may store the event ID in an ID field, in the logging message, or not at all. The Debug provider doesn't show event IDs. The console provider shows event IDs in brackets after the category:
+
+```log title="Console"
+info: TodoApi.Controllers.TodoItemsController[1002]
+      Getting item 1
+warn: TodoApi.Controllers.TodoItemsController[4000]
+      Get(1) NOT FOUND
+```
+
+Some `logging providers` `store` the `event ID` in a `field`, which allows for `filtering` on the ID.
+
 ## Log Message Template
+
+Each log API uses a message template. The message template can contain placeholders for which arguments are provided. Use names for the placeholders, not numbers.
+
+The order of the parameters, not their placeholder names, determines which parameters are used to provide placeholder values in log messages.
+
+In the following code, the parameter names are out of sequence in the placeholders of the message template:
+
+```cs title="C#"
+string apples = 1;
+string pears = 2;
+string bananas = 3;
+
+_logger.LogInformation("Parameters: {pears}, {bananas}, {apples}", apples, pears, bananas);
+```
+
+However, the parameters are assigned to the placeholders in the order: `apples`, `pears`, `bananas`. The log message reflects the order of the parameters:
+
+```log title="Text"
+Parameters: 1, 2, 3
+```
+
+This approach allows logging providers to implement [semantic or structured logging](https://github.com/NLog/NLog/wiki/How-to-use-structured-logging). The arguments themselves are passed to the logging system, not just the formatted message template. This enables logging providers to store the parameter values as fields.
 
 ## Log Exceptions
 
+Exception logging is provider-specific.
+
+The logger methods have overloads that take an exception parameter:
+
+```cs title="C#" hl_lines="16"
+[HttpGet("{id}")]
+public IActionResult TestExp(int id)
+{
+    var routeInfo = ControllerContext.ToCtxString(id);
+    _logger.LogInformation(MyLogEvents.TestItem, routeInfo);
+
+    try
+    {
+        if (id == 3)
+        {
+            throw new Exception("Test exception");
+        }
+    }
+    catch (Exception ex)
+    {
+        _logger.LogWarning(MyLogEvents.GetItemNotFound, ex, "TestExp({Id})", id);
+        return NotFound();
+    }
+
+    return ControllerContext.MyDisplayRouteInfo();
+}
+```
+
 ## ASP.NET Core and EF Core Categories
 
-## Log Scopes
+The following table contains some categories used by ASP.NET Core and Entity Framework Core, with notes about the logs:
 
-## Built-in Logging Providers
-
-## Third-party Logging Providers
-
-### Azure Insights?
+| Category                              | Notes                                                                                                             |
+| ------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `Microsoft.AspNetCore`                | General ASP.NET Core diagnostics.                                                                                 |
+| `Microsoft.AspNetCore.DataProtection` | Which keys were considered, found, and used.                                                                      |
+| `Microsoft.AspNetCore.HostFiltering`  | Hosts allowed.                                                                                                    |
+| `Microsoft.AspNetCore.Hosting`        | How long HTTP requests took to complete and what time they started. Which hosting startup assemblies were loaded. |
+| `Microsoft.AspNetCore.Mvc`            | MVC and Razor diagnostics. Model binding, filter execution, view compilation, action selection.                   |
+| `Microsoft.AspNetCore.Routing`        | Route matching information.                                                                                       |
+| `Microsoft.AspNetCore.Server`         | Connection start, stop, and keep alive responses. HTTPS certificate information.                                  |
+| `Microsoft.AspNetCore.StaticFiles`    | Files served.                                                                                                     |
+| `Microsoft.EntityFrameworkCore`       | General Entity Framework Core diagnostics. Database activity and configuration, change detection, migrations.     |
 
 ## Change log levels in a running app
 
-## ASP.NET Core
+The Logging API doesn't include a scenario to change log levels while an app is running.
 
-The default ASP.NET Core web app templates:
+Some configuration providers are capable of reloading configuration, which takes immediate effect on logging configuration. For example, the [File Configuration Provider](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-7.0#file-configuration-provider), reloads logging configuration by default. If configuration is changed in code while an app is running, the app can call IConfigurationRoot.Reload to update the app's logging configuration.
 
-- Use the `Generic Host`.
-- Call WebApplication.CreateBuilder, which adds the following logging providers:
-  - `Console`
-  - `Debug`
-  - `EventSource`
-  - `EventLog`: Windows only
+## No asynchronous logger methods
 
-**Exception handler page**
-To configure a custom error handling page for the Production environment, call UseExceptionHandler. This exception handling middleware:
+Logging should be so fast that it isn't worth the performance cost of asynchronous code. If a logging data store is slow, don't write to it directly. Consider writing the log messages to a fast store initially, then moving them to the slow store later.
 
-- Catches and logs unhandled exceptions.
-- Re-executes the request in an alternate pipeline using the path indicated. The request isn't re-executed if the response has started. The template-generated code re-executes the request using the /Error path.
+For example, when logging to SQL Server, don't do so directly in a Log method, since the Log methods are synchronous. Instead, synchronously add log messages to an in-memory queue and have a background worker pull the messages out of the queue to do the asynchronous work of pushing data to SQL Server.
 
-```cs title="C# - Default implementation " linenums="1" hl_lines="4 6"
-
-// FILE: Program.cs
-var app = builder.Build();
-
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Error");
-    app.UseHsts();
-}
-
-```
-
-```cs title="C# - Sample"
-
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
-namespace LogDataGenerator.Controllers.api
-{
-    [ApiController]
-    [Route("[controller]")]
-    public class GenerateController : ControllerBase
-    {
-        private readonly ILogger<GenerateController> _logger;
-
-        public GenerateController(ILogger<GenerateController> logger)
-        {
-            this._logger = logger;
-        }
-
-        // GET: GenerateController
-        public JS Get()
-        {
-            _logger.LogInformation("GenerateController page visited at {DT}", DateTime.UtcNow.ToLongTimeString());
-
-            return "Success";
-        }
-    }
-}
-
-```
-
-## Generic Host
+For more information, see [Guidance on how to log to a message queue for slow data stores (dotnet/AspNetCore.Docs #11801)](https://github.com/dotnet/AspNetCore.Docs/issues/11801).
 
 ## References
 
