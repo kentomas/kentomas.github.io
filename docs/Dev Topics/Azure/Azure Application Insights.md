@@ -72,9 +72,21 @@ app.UseRouting();
 }
 ```
 
+## Is it Free?
+
+Yes, for experimental use. In the basic pricing plan, your application can send a certain allowance of data each month free of charge. The free allowance is large enough to cover development, and publishing an app for a few users. You can set a cap to prevent more than a specified amount of data from being processed.
+
+Larger volumes of telemetry are charged by the Gb. We provide some tips on how to [limit your charges](https://learn.microsoft.com/en-us/azure/azure-monitor/best-practices-cost#data-collection).
+
+The Enterprise plan incurs a charge for each day that each web server node sends telemetry. It's suitable if you want to use Continuous Export on a large scale.
+
+[Read the pricing plan](https://azure.microsoft.com/pricing/details/application-insights/).
+
+Reference: [https://learn.microsoft.com/en-us/azure/azure-monitor/faq#application-insights](https://learn.microsoft.com/en-us/azure/azure-monitor/faq#application-insights)
+
 ## FAQ
 
-- Should I include Azure Application Insights at the beginning of development? or at the end when the application is working?
+- Should I `include` `Azure Application Insights` at the beginning of `development`? or at the end when the application is working?
 
   It is generally recommended to include Azure Application Insights at the beginning of development, as it can help you monitor the performance, usage, and availability of your application throughout the development process.
 
@@ -86,7 +98,7 @@ app.UseRouting();
 
   Overall, including Azure Application Insights early on in the development process can help you catch and diagnose issues early, but it can also be beneficial even if you include it later in the development process.
 
-- How can I reduce the cost of using Azure Application Insights?
+- How can I `reduce the cost` of using `Azure Application Insights`?
 
 There are several ways to reduce the cost of using Azure Application Insights:
 
@@ -98,6 +110,16 @@ There are several ways to reduce the cost of using Azure Application Insights:
 6. Use Azure Monitor Workbooks: Azure Monitor Workbooks allow you to create and share interactive and customizable visualizations of your data. This can help you to identify patterns and trends in your data, which can help you reduce costs by identifying and resolving issues early.
 
 Overall, using a combination of the above methods can help you reduce the cost of using Azure Application Insights while still gaining the insights and monitoring that you need to run your application efficiently.
+
+- How do I set the data retention policy for Azure Insights?
+
+Workspace-based Application Insights resources store data in a Log Analytics workspace, so it's included in the data retention and archive settings for the workspace.
+
+> `Portal` > **`Log Analytics Workspaces`** > _`<App Log Workspace>`_ > `Menu` > `General` > **`Usage and estimate costs`** > `Data Retention (Button)`
+
+The default retention for Application Insights resources is 90 days. You can select different retention periods for each Application Insights resource. The full set of available retention periods is 30, 60, 90, 120, 180, 270, 365, 550, or 730 days.
+
+Reference: [https://learn.microsoft.com/en-us/azure/azure-monitor/logs/data-retention-archive?tabs=portal-1%2Cportal-2](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/data-retention-archive?tabs=portal-1%2Cportal-2)
 
 ## References
 

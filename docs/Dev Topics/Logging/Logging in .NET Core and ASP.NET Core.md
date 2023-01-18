@@ -153,6 +153,8 @@ We will use:
 
 The Console provider logs output to the console.
 
+The `Console` `is` the `CMD/Shell Terminal` that is launched to run the ASP.NET application. By default, any logging will be made into the `Output` of Visual Studio Community.
+
 > NOTE: Remember to update `appsettings.json` to ensure the `classes` with logging are visible.
 
 ```cs title="C#" hl_lines="3"
