@@ -12,6 +12,10 @@ It is a mechanism that allows a web page from one domain to make requests to a d
 
 Unable to be changed.
 
+## Service Principal
+
+A Service Principal is an identity created for use by applications or services within a Microsoft Azure subscription. It allows the application or service to authenticate to Azure resources and perform actions with the permissions granted to the principal. This allows for more granular control over access to Azure resources, as permissions can be granted or revoked for a specific Service Principal, rather than for an entire user or service.
+
 ## Ubiquitous Language
 
 A ubiquitous language is a vocabulary shared by everyone involved in a project, from domain experts to stakeholders, to project managers, to developers.
