@@ -2,7 +2,7 @@
 
 ## Join Query In Entity Framework
 
-Source: [https://www.tektutorialshub.com/entity-framework/join-query-entity-framework/](https://www.tektutorialshub.com/entity-framework/join-query-entity-framework/)
+Source: <https://www.tektutorialshub.com/entity-framework/join-query-entity-framework/>
 
 === "C#"
 

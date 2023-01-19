@@ -2,7 +2,7 @@
 
 ## Workflows
 
-**Source:** https://www.atlassian.com/git/tutorials/comparing-workflows/forking-workflow
+**Source:** <https://www.atlassian.com/git/tutorials/comparing-workflows/forking-workflow>
 
 1. Gitflow Workflow (preferred)
       - Branches:

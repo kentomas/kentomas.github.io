@@ -161,8 +161,8 @@ You can also use a BlobTrigger which triggers a function when a new blob is adde
 
     ```
 
-## References:
+## References
 
-1. https://learn.microsoft.com/en-us/training/modules/serverless-fundamentals/
-2. https://github.com/MicrosoftDocs/azure-docs/blob/main/articles/azure-functions/functions-scenario-database-table-cleanup.md
-3. https://stackoverflow.com/questions/67546988/azure-app-service-plan-function-vs-app-service
+1. <https://learn.microsoft.com/en-us/training/modules/serverless-fundamentals/>
+2. <https://github.com/MicrosoftDocs/azure-docs/blob/main/articles/azure-functions/functions-scenario-database-table-cleanup.md>
+3. <https://stackoverflow.com/questions/67546988/azure-app-service-plan-function-vs-app-service>

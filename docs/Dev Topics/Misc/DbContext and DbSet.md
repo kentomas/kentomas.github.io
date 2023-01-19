@@ -1,6 +1,6 @@
 # DbContext and DbSet
 
-Source: [https://learn.microsoft.com/en-us/ef/core/miscellaneous/nullable-reference-types#dbcontext-and-dbset](https://learn.microsoft.com/en-us/ef/core/miscellaneous/nullable-reference-types#dbcontext-and-dbset)
+Source: <https://learn.microsoft.com/en-us/ef/core/miscellaneous/nullable-reference-types#dbcontext-and-dbset>
 
 The common practice of having uninitialized DbSet properties on context types is also problematic, as the compiler will now emit warnings for them. This can be fixed as follows:
 

@@ -1,6 +1,6 @@
 # OO Design Principles
 
-# SOLID
+## SOLID
 
 SOLID design principles of object-oriented programming:
 

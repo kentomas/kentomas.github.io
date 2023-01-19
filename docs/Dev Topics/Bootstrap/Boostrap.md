@@ -25,4 +25,4 @@ Get links to these references at: [Boostrap Introduction](https://getbootstrap.c
 
 ## References
 
-- [https://getbootstrap.com/](https://getbootstrap.com/)
+- <https://getbootstrap.com/>
