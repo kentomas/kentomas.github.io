@@ -292,6 +292,17 @@ jobs:
     2. We want to push to a test environment first before pushing to production.
           1. So we need to work out how to push to the correct Azure Slot (i.e. Production or Test).
 
+## Ports
+
+1. The angular app is deployed on `https://localhost:44488` by default.
+   1. The file `*.sln > *.csproj > ClientApp > package.json`
+2. The SPA Proxy Server URL.
+   1. It's within the Project's Properties `*.csproj > SpaProxyServerUrl`
+3. `launchsettings.json`
+   1. The profiles identify the applicationUrl which states the port numbers.
+   2. `launchsettings.json > profiles > DocNumberManager > applicationUrl`
+      1. Sample: "applicationUrl": "https://localhost:7216;http://localhost:5249"
+
 ## References
 
 1. [https://learn.microsoft.com/en-us/azure/app-service/app-service-sql-asp-github-actions](https://learn.microsoft.com/en-us/azure/app-service/app-service-sql-asp-github-actions)
