@@ -30,8 +30,8 @@
 6. Click `Create` button.
 7. Copy the generated `ClientID` and `Client Secret`.
    1. Select `Download as JSON` if required.
-   2. ClientID: 481633462268-n4gctrj2vdmeqgcrkiin5q8ac84pkkte.apps.googleusercontent.com
-   3. Client Secret: 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
+   2. `ClientID`: ********************.apps.googleusercontent.com
+   3. `Client Secret`: *******************
 
 !!! tip
 
