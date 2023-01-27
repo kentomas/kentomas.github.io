@@ -23,6 +23,20 @@ Files/Folders that need to be edited in order to delete the component:
 1. Edit `ClientApp\src\app\app.module.ts` to remove referenced component.
 2. Delete all files within the component folder within `ClientApp\src\app\`.
 
+## Check angular version
+
+=== "Bash"
+
+    ``` sh
+    ng version
+    ```
+
+=== "PowerShell"
+
+    ``` PowerShell
+    ng version
+    ```
+
 ## References
 
 - [Getting Started with Angular](https://angular.io/start)

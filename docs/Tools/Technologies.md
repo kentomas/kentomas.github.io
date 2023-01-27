@@ -11,16 +11,16 @@
 - [ ] Kafka
 - [ ] EntityFramework
 - [ ] SSOs
-    - [ ] Google
-    - [ ] Facebook
-    - [ ] Apple
-    - [ ] Email and Password
-    - [ ] Azure AD
-    - [ ] Standard AD
+  - [ ] Google
+  - [ ] Facebook
+  - [ ] Apple
+  - [ ] Email and Password
+  - [ ] Azure AD
+  - [ ] Standard AD
 - [ ] MFA
-    - [ ] QR Codes
-    - [ ] Integration with Google Authenticator
-    - [ ] Integration with Microsoft Authenticator
+  - [ ] QR Codes
+  - [ ] Integration with Google Authenticator
+  - [ ] Integration with Microsoft Authenticator
 - [ ] SMS Services
 - [ ] Integrate Payment Gateway
-    - [ ] TODO
+  - [ ] TODO
