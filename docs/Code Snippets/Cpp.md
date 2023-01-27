@@ -1,5 +1,7 @@
 # C++ Code Snippets
 
+**References:** <https://en.cppreference.com/w/cpp/algorithm/lower_bound>
+
 ## Collections
 
 ```cpp
@@ -52,6 +54,32 @@ long long CalculateVolume()
     result = result * _height;
     return result;
 }   
+```
+
+## Lower bound
+
+``` cpp
+#include <algorithm>
+#include <iostream>
+#include <vector>
+
+int main()
+{
+    const std::vector<int> data = {1, 2, 4, 5, 5, 6};
+ 
+    for (int i = 0; i < 8; ++i)
+    {
+        // Search for first element x such that i ≤ x
+        auto lower = std::lower_bound(data.begin(), data.end(), i);
+ 
+        std::cout << i << " ≤ ";
+        lower != data.end()
+            ? std::cout << *lower << " at index " << std::distance(data.begin(), lower)
+            : std::cout << "not found";
+        std::cout << '\n';
+    }
+}
+
 ```
 
 ## Outputstream
