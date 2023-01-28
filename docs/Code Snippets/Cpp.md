@@ -10,26 +10,80 @@ std::stack<int> lifo_list_2;
 std::queue<int> fifo_list_1;
 ```
 
-## Custom Exception
+## Cout
+
+### Print hex
 
 ``` cpp
+cout << left << showbase << nouppercase << hex << (long long)A << endl;
+```
+
+The `left`, `showbase`, `nouppercase`, and `hex` manipulators are being used to modify the behavior of the cout function.
+
+- `left` : it will align the output to the left.
+- `showbase` : it will cause the output to include a prefix indicating the base of the number being printed.
+- `nouppercase` : it will cause the output to be in lowercase letters.
+- `hex` : it will cause the output to be in hexadecimal format.
+
+The `endl` is a manipulator which causes a newline character to be output and the buffer to be flushed.
+
+The `(long long)` cast is used to ensure that the value of A is treated as a long long integer.
+
+It will output the value of A in left-aligned hexadecimal format, including a prefix indicating that the base is hexadecimal and using lowercase letters for the digits.
+
+### Print padded fixed-width output with sign
+
+``` cpp
+cout << setprecision(2) << setw(15) << right << showpos << fixed << setfill('_') << B << endl;
+```
+
+The `setprecision(2)`, `setw(15)`, `right`, `showpos`, `fixed`, `setfill('_')` manipulators are being used to modify the behavior of the cout function.
+
+- `setprecision(2)`: it will set the precision of the output to 2 decimal places.
+- `setw(15)`: it will set the width of the output field to be 15 characters.
+- `right`: it will align the output to the right.
+- `showpos`: it will cause the output to include a sign (+ or -) for positive numbers.
+- `fixed`: it will cause the output to be in fixed-point notation.
+- `setfill('_')`: it will set the fill character for the output field to be '_'.
+- The `endl` is a manipulator which causes a newline character to be output and the buffer to be flushed.
+
+It will output the value of `B` with `2 decimal places`, `right-aligned`, with a `field width` of `15 characters` and `filled with '_'`, a `sign prefix` for positive numbers, in `fixed point notation`.
+
+### Print scientific notation
+
+``` cpp
+cout << setprecision(9) << noshowpos << uppercase << scientific << C << endl;
+```
+
+The `setprecision(9)`, `noshowpos`, `uppercase`, `scientific` manipulators are being used to modify the behavior of the `cout` function.
+
+- `setprecision(9)`: it will set the precision of the output to 9 decimal places.
+- `noshowpos`: it will cause the output not to include a sign (+ or -) for positive numbers.
+- `uppercase`: it will cause the output to be in uppercase letters.
+- `scientific`: it will cause the output to be in scientific notation.
+- The `endl` is a manipulator which causes a newline character to be output and the buffer to be flushed.
+
+It will output the value of `C` with `9 decimal places`, `not show positive sign`, in `uppercase` letters and using `scientific notation`.
+
+## Custom Exception
+
+```cpp
 /* Define the exception here */
 class BadLengthException : public std::exception {
     private:
-    
+
     std::string what_message;
-    
+
     public:
     BadLengthException(int length){
         what_message = std::to_string(length);
     }
-    
+
     const char * what () {
         return what_message.c_str();
     }
 };
 ```
-
 
 ## Dictionary
 
@@ -39,7 +93,7 @@ class BadLengthException : public std::exception {
 
 ## Long Long
 
-``` cpp
+```cpp
 int _length;
 int _breadth;
 int _height;
@@ -53,12 +107,12 @@ long long CalculateVolume()
     result = result * _breadth;
     result = result * _height;
     return result;
-}   
+}
 ```
 
 ## Lower bound
 
-``` cpp
+```cpp
 #include <algorithm>
 #include <iostream>
 #include <vector>
@@ -66,12 +120,12 @@ long long CalculateVolume()
 int main()
 {
     const std::vector<int> data = {1, 2, 4, 5, 5, 6};
- 
+
     for (int i = 0; i < 8; ++i)
     {
         // Search for first element x such that i ≤ x
         auto lower = std::lower_bound(data.begin(), data.end(), i);
- 
+
         std::cout << i << " ≤ ";
         lower != data.end()
             ? std::cout << *lower << " at index " << std::distance(data.begin(), lower)
@@ -80,6 +134,49 @@ int main()
     }
 }
 
+```
+
+## Maps
+
+```cpp
+std::map <key_type, data_type>
+
+//Creates a map m where key_type is of type string and data_type is of type int.
+map<string,int> m;
+
+int length = m.size(); //Gives the size of the map.
+
+m.insert(make_pair("hello",9)); //Here the pair is inserted into the map where the key is "hello" and the value associated with it is 9.
+
+m.erase(val); //Erases the pair from the map where the key_type is val.
+map<string,int>::iterator itr=m.find(val); //Gives the iterator to the element val if it is found otherwise returns m.end() .
+
+map<string,int>::iterator itr=m.find("Maps"); //If Maps is not present as the key value then itr==m.end().
+
+// To get the value stored of the key "MAPS" we can do m["MAPS"] or we can get the iterator using the find function and then by itr->second we can access the value.
+var mapsVal = m["MAPS"];
+```
+
+```cpp
+#include <iostream>
+#include <map>
+using namespace std;
+int main(void) {
+   map<char, int> m = {
+        {'a', 100},
+        {'b', 200},
+        {'c', 300},
+        {'d', 400},
+        {'e', 500},
+    };
+
+   auto it = m.find('c');
+
+   cout << "Iterator points to " << it->first <<
+      " = " << it->second << endl;
+
+   return 0;
+}
 ```
 
 ## Outputstream
@@ -156,6 +253,18 @@ scanf_s("%lf", &d);
 printf("You entered: %d, %ld, %c, %f, %lf\n", i, l, c, f, d);
 ```
 
+## Sets
+
+```cpp
+set<int>s;              //Creates a set of integers.
+int length=s.size();    //Gives the size of the set.
+s.insert(x);            //Inserts an integer x into the set s.
+s.erase(val);           //Erases an integer val from the set s.
+
+set<int>::iterator itr=s.find(val); //Gives the iterator to the element val if it is found otherwise returns s.end() .
+set<int>::iterator itr=s.find(100); //If 100 is not present then it==s.end().
+```
+
 ## Split String
 
 ```cpp
@@ -201,6 +310,19 @@ std:: substring = s.substr(pos_start, pos_end - pos_start);
 ## Switch
 
 ```cpp
+switch(expression) {
+  case x:
+    // code block
+    break;
+  case y:
+    // code block
+    break;
+  default:
+    // code block
+}
+```
+
+```cpp
 const std::string getString(int n)
 {
     switch (n) {
@@ -218,9 +340,34 @@ const std::string getString(int n)
 }
 ```
 
+## Template
+
+```cpp
+// function template
+#include <iostream>
+using namespace std;
+
+template <class T>
+T GetMax (T a, T b) {
+    T result;
+    result = (a>b)? a : b;
+    return (result);
+}
+
+int main () {
+    int i=5, j=6, k;
+    long l=10, m=5, n;
+    k=GetMax<int>(i,j);
+    n=GetMax<long>(l,m);
+    cout << k << endl;
+    cout << n << endl;
+    return 0;
+}
+```
+
 ## Try catch
 
-``` cpp
+```cpp
 try
 {
     throw std::exception();
