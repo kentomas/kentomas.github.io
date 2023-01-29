@@ -14,7 +14,7 @@ std::queue<int> fifo_list_1;
 
 ### Print hex
 
-``` cpp
+```cpp
 cout << left << showbase << nouppercase << hex << (long long)A << endl;
 ```
 
@@ -29,11 +29,11 @@ The `endl` is a manipulator which causes a newline character to be output and th
 
 The `(long long)` cast is used to ensure that the value of A is treated as a long long integer.
 
-It will output the value of A in left-aligned hexadecimal format, including a prefix indicating that the base is hexadecimal and using lowercase letters for the digits.
+It will output the value of `A` in `left-aligned` `hexadecimal format`, including a `prefix` `indicating` that the `base` is `hexadecimal` and `using lowercase letters` for the digits.
 
 ### Print padded fixed-width output with sign
 
-``` cpp
+```cpp
 cout << setprecision(2) << setw(15) << right << showpos << fixed << setfill('_') << B << endl;
 ```
 
@@ -44,14 +44,14 @@ The `setprecision(2)`, `setw(15)`, `right`, `showpos`, `fixed`, `setfill('_')` m
 - `right`: it will align the output to the right.
 - `showpos`: it will cause the output to include a sign (+ or -) for positive numbers.
 - `fixed`: it will cause the output to be in fixed-point notation.
-- `setfill('_')`: it will set the fill character for the output field to be '_'.
+- `setfill('_')`: it will set the fill character for the output field to be '\_'.
 - The `endl` is a manipulator which causes a newline character to be output and the buffer to be flushed.
 
 It will output the value of `B` with `2 decimal places`, `right-aligned`, with a `field width` of `15 characters` and `filled with '_'`, a `sign prefix` for positive numbers, in `fixed point notation`.
 
 ### Print scientific notation
 
-``` cpp
+```cpp
 cout << setprecision(9) << noshowpos << uppercase << scientific << C << endl;
 ```
 
@@ -65,7 +65,28 @@ The `setprecision(9)`, `noshowpos`, `uppercase`, `scientific` manipulators are b
 
 It will output the value of `C` with `9 decimal places`, `not show positive sign`, in `uppercase` letters and using `scientific notation`.
 
-## Custom Exception
+## Exceptions
+
+### Exception Handling
+
+```cpp
+try {
+    cout << Server::compute(A, B) << endl;
+}
+catch (std::bad_alloc& ba)
+{
+    cout << "Not enough memory" << endl;
+}
+catch (std::exception &e) {
+    cout << "Exception: " << e.what() << endl;
+}
+catch (...)
+{
+    cout << "Other Exception" << endl;
+}
+```
+
+### Custom Exception
 
 ```cpp
 /* Define the exception here */
@@ -83,12 +104,6 @@ class BadLengthException : public std::exception {
         return what_message.c_str();
     }
 };
-```
-
-## Dictionary
-
-```cpp
-
 ```
 
 ## Long Long
@@ -300,6 +315,12 @@ while (std::getstring(ss, sub_string, delimiter))
 }
 ```
 
+## Struct
+
+```cpp
+
+```
+
 ## Sub string
 
 ```cpp
@@ -342,6 +363,8 @@ const std::string getString(int n)
 
 ## Template
 
+### Template Function
+
 ```cpp
 // function template
 #include <iostream>
@@ -361,6 +384,66 @@ int main () {
     n=GetMax<long>(l,m);
     cout << k << endl;
     cout << n << endl;
+    return 0;
+}
+```
+
+### Template Class
+
+```cpp
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <cassert>
+using namespace std;
+
+/*Write the class AddElements here*/
+template <class T>
+class AddElements {
+    T element;
+public:
+    AddElements(T arg) { element = arg; }
+    T add(T x) { return x + element; }
+};
+template <>
+class AddElements <string> {
+    string element;
+public:
+    AddElements(string arg) { element = arg; }
+    string concatenate(string arg)
+    {
+        string s = element + arg;
+        return s;
+    }
+};
+
+int main() {
+    int n, i;
+    cin >> n;
+    for (i = 0; i < n; i++) {
+        string type;
+        cin >> type;
+        if (type == "float") {
+            double element1, element2;
+            cin >> element1 >> element2;
+            AddElements<double> myfloat(element1);
+            cout << myfloat.add(element2) << endl;
+        }
+        else if (type == "int") {
+            int element1, element2;
+            cin >> element1 >> element2;
+            AddElements<int> myint(element1);
+            cout << myint.add(element2) << endl;
+        }
+        else if (type == "string") {
+            string element1, element2;
+            cin >> element1 >> element2;
+            AddElements<string> mystring(element1);
+            cout << mystring.concatenate(element2) << endl;
+        }
+    }
     return 0;
 }
 ```
@@ -397,5 +480,81 @@ int main() {
         numbers.push_back(std::stoi(token));
     }
     return 0;
+}
+```
+
+## Vectors
+
+```cpp
+#include <vector>
+std::vector<int> v;
+```
+
+### Using custom class in vector
+
+> The Class needs to overload the `<` operator so it can be iterated over.
+
+```cpp hl_lines="15-18"
+
+class Message {
+protected:
+    int id;
+    std::string txt;
+public:
+    Message(){
+        id = numMessages++;
+    }
+    void setText(std::string m) { txt = m; }
+    const string& get_text() {
+        return txt;
+    }
+
+    bool operator<(const Message& m2)
+    {
+        return id < m2.id;
+    }
+};
+
+```
+
+## Virtual functions
+
+```cpp
+class Person {
+protected:
+    std::string name;
+    int age;
+public:
+    virtual void getdata() {}
+    virtual void putdata() {}
+};
+
+class Professor : public Person {
+protected:
+    int publications;
+    int cur_id;
+public:
+    Professor()
+    {
+        cur_id = professorCount;
+        professorCount++;
+    }
+
+    void getdata() {
+        std::cin >> name >> age >> publications;
+    }
+
+    void putdata()
+    {
+        cout << name << " " << age << " " << publications << " " << cur_id << endl;
+    }
+
+};
+
+int main ()
+{
+    Person* per = new Professor;
+    per->getdata();
+    per->pushdata();
 }
 ```
