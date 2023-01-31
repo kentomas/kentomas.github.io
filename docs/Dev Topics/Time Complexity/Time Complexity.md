@@ -55,7 +55,7 @@ public class GFG {
 
 ## Logarithmic time - O(log<sub>2</sub>(n))
 
-```cs
+```cs hl_lines="9"
 using System;
 
 public class GFG{
