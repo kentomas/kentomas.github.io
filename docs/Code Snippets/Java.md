@@ -8,6 +8,23 @@
 int[] marks = { 125, 132, 95, 116, 110 };
 ```
 
+### Big Integer
+
+```java
+Scanner scan = new Scanner(System.in);
+String aStr = scan.next();
+String bStr = scan.next();
+
+BigInteger a = new BigInteger(aStr);
+BigInteger b = new BigInteger(bStr);
+
+BigInteger sum = a.add(b);
+BigInteger mult = a.multiply(b);
+
+System.out.println(sum);
+System.out.println(mult);
+```
+
 ## Conversions
 
 ### String to Int
@@ -36,9 +53,9 @@ Print the dates Day in all caps.
 
 ```java
 public static String findDay(int month, int day, int year) {
-    Calendar calendar = Calendar.getInstance();  
+    Calendar calendar = Calendar.getInstance();
     calendar.set(year, month-1, day);
-    
+
     //SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyy");
     SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE");
 
