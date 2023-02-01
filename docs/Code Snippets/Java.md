@@ -41,11 +41,38 @@ class Main {
 int[] marks = { 125, 132, 95, 116, 110 };
 ```
 
+## ArrayList
+
+```java
+import java.util.ArrayList;
+import java.util.Collections;  // Import the Collections class
+
+public class Main {
+  public static void main(String[] args) {
+    ArrayList<String> cars = new ArrayList<String>();
+    cars.add("Volvo");
+    cars.add("BMW");
+    cars.add("Ford");
+    cars.add("Mazda");
+    System.out.println(cars);
+
+    cars.get(0);
+    cars.set(0, "Opel");
+    cars.remove(0);
+    cars.clear();
+    cars.size();
+
+    Collections.sort(cars);  // Sort cars
+
+  }
+}
+```
+
 ### Big Integer
 
 ```java
 Scanner scan = new Scanner(System.in);
-String aStr = scan.next(); 
+String aStr = scan.next();
 String bStr = scan.next();
 
 BigInteger a = new BigInteger(aStr);
@@ -127,7 +154,7 @@ public class Main {
   }
 
   public static void main(String[] args) {
-    Level myVar = Level.MEDIUM; 
+    Level myVar = Level.MEDIUM;
     System.out.println(myVar);
   }
 }
@@ -146,7 +173,7 @@ for (Level myVar : Level.values()) {
 
 ## Exceptions
 
-``` java
+```java
 class MyCalculator {
     /*
     * Create the method long power(int, int) here.
@@ -158,7 +185,7 @@ class MyCalculator {
 
         if (n < 0 || p < 0)
             throw new Exception("n or p should not be negative.");
-        
+
         return (long)Math.pow(n,p);
     }
 }
@@ -232,9 +259,9 @@ class Add
 {
     public Add()
     {
-        
+
     }
-    
+
    void add(int... n){
         String result= "";
         int sum = 0;
@@ -255,12 +282,45 @@ void main()
     Add ob=new Add();
     ob.add(n1,n2);
     ob.add(n1,n2,n3);
-    ob.add(n1,n2,n3,n4,n5);	
+    ob.add(n1,n2,n3,n4,n5);
     ob.add(n1,n2,n3,n4,n5,n6);
 }
 ```
 
+## HashMap
+
+- "key/value" pairs
+- is unordered.
+
+```java
+// Import the HashMap class
+import java.util.HashMap;
+
+public class Main {
+  public static void main(String[] args) {
+    // Create a HashMap object called capitalCities
+    HashMap<String, String> capitalCities = new HashMap<String, String>();
+
+    // Add keys and values (Country, City)
+    capitalCities.put("England", "London");
+    capitalCities.put("Germany", "Berlin");
+    capitalCities.put("Norway", "Oslo");
+    capitalCities.put("USA", "Washington DC");
+    System.out.println(capitalCities);
+
+    capitalCities.get("England");
+    capitalCities.remove("England");
+
+    capitalCities.clear();
+    capitalCities.size();
+
+  }
+}
+```
+
 ## Hashset
+
+- not ordered.
 
 ```java
 HashSet<String> cars = new HashSet<String>();
@@ -421,16 +481,19 @@ scanner.close();
 
 ## Sorting
 
+- Java `doesn't have` any collections with a `default sort order`.
+- Time complexity is `O(N*log(N))` using the `Collections.sort(myArrayList)`.
+
 ```java
 public static List<Integer> missingNumbers(List<Integer> arr, List<Integer> brr) {
 // Write your code here
     ArrayList<Integer> missingElements = new ArrayList<>();
-    
+
     for (int i = 0; i < arr.size(); i++)
     {
         brr.remove(arr.get(i));
     }
-    
+
     for (Integer val : brr)
     {
         if (!missingElements.contains(val))
@@ -438,9 +501,9 @@ public static List<Integer> missingNumbers(List<Integer> arr, List<Integer> brr)
             missingElements.add(val);
         }
     }
-    
+
     Collections.sort(missingElements); // <--- THIS
-    
+
     return missingElements;
 }
 ```
@@ -460,6 +523,90 @@ class Whatever {
 }
 ```
 
+## Threads
+
+- `myThread.join()` is a blocking call.
+
+```java
+class MyThread extends Thread {
+  public void run() {
+    System.out.println("Running in a Thread");
+  }
+}
+
+public class Main {
+  public static void main(String[] args) {
+    MyThread t = new MyThread();
+    t.start();
+  }
+}
+```
+
+```java
+class MyThread extends Thread {
+  private volatile boolean running = true;
+
+  public void run() {
+    while (running) {
+      System.out.println("Running in a Thread");
+      try {
+        Thread.sleep(1000);
+      } catch (InterruptedException e) {
+        System.out.println("Thread interrupted");
+      }
+    }
+  }
+
+  public void stopThread() {
+    running = false;
+  }
+}
+
+public class Main {
+  public static void main(String[] args) {
+    MyThread t = new MyThread();
+    t.start();
+
+    try {
+      Thread.sleep(10000);
+    } catch (InterruptedException e) {
+      System.out.println("Main thread interrupted");
+    }
+
+    t.stopThread();
+  }
+}
+```
+
+```java
+public class Main extends Thread {
+  public static void main(String[] args) {
+    Main thread = new Main();
+    thread.start();
+    System.out.println("This code is outside of the thread");
+  }
+  public void run() {
+    System.out.println("This code is running in a thread");
+  }
+}
+```
+
+```java title="Extends Thread"
+public class Main extends Thread {
+  public void run() {
+    System.out.println("This code is running in a thread");
+  }
+}
+```
+
+```java title="Implement"
+public class Main implements Runnable {
+  public void run() {
+    System.out.println("This code is running in a thread");
+  }
+}
+```
+
 ## Tokens
 
 ```java
@@ -476,3 +623,34 @@ while(st.hasMoreTokens())
 
 scan.close();
 ```
+
+## Wrapper Classes
+
+- Sometimes you must use wrapper classes, for example when working with Collection objects, such as ArrayList, where primitive types cannot be used (the list can only store objects):
+
+```java
+ArrayList<int> myNumbers = new ArrayList<int>(); // Invalid
+ArrayList<Integer> myNumbers = new ArrayList<Integer>(); // Valid
+
+public class Main {
+  public static void main(String[] args) {
+    Integer myInt = 5;
+    Double myDouble = 5.99;
+    Character myChar = 'A';
+    System.out.println(myInt.intValue());
+    System.out.println(myDouble.doubleValue());
+    System.out.println(myChar.charValue());
+  }
+}
+```
+
+| Primitive Data | Type Wrapper Class |
+| -------------- | ------------------ |
+| byte           | Byte               |
+| short          | Short              |
+| int            | Integer            |
+| long           | Long               |
+| float          | Float              |
+| double         | Double             |
+| boolean        | Boolean            |
+| char           | Character          |
