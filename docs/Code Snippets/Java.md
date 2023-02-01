@@ -121,6 +121,23 @@ sc.close();
 Math.pow(2, 10) // 2^10.
 ```
 
+## Prime Numbers
+
+```java
+String n = bufferedReader.readLine();
+
+BigInteger bg = new BigInteger(n);
+int cetaintity = 100;
+if (bg.isProbablePrime(cetaintity))
+{
+    System.out.println("prime");
+}
+else
+{
+    System.out.println("not prime");
+}
+```
+
 ## Scanner
 
 ```java
