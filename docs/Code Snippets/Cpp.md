@@ -270,6 +270,10 @@ printf("You entered: %d, %ld, %c, %f, %lf\n", i, l, c, f, d);
 
 ## Sets
 
+- Ordered list.
+  - Default: asc
+- Insertion, lookup and deletion take at most `O(log n)` time
+
 ```cpp
 set<int>s;              //Creates a set of integers.
 int length=s.size();    //Gives the size of the set.
@@ -278,6 +282,46 @@ s.erase(val);           //Erases an integer val from the set s.
 
 set<int>::iterator itr=s.find(val); //Gives the iterator to the element val if it is found otherwise returns s.end() .
 set<int>::iterator itr=s.find(100); //If 100 is not present then it==s.end().
+```
+
+### Set - ordering
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <map>
+#include <set>
+
+using namespace std;
+
+int main()
+{
+    std::set<int> input;
+
+    input.insert(3);
+    input.insert(2);
+    input.insert(4);
+    input.insert(1);
+    input.insert(5);
+
+    for (int n : input)
+    {
+        cout << n << endl;
+    }
+    return 0;
+}
+
+// OUTPUT:
+// 1
+// 2
+// 3
+// 4
+// 5
+```
+
+```cpp Set order by desc.
+//By default, std::set uses std::less. To cause it to sort in reverse order, use std::greater. E.g.
+std::set<int, std::greater> s;
 ```
 
 ## Split String
