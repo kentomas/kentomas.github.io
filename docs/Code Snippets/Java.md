@@ -12,7 +12,7 @@ int[] marks = { 125, 132, 95, 116, 110 };
 
 ```java
 Scanner scan = new Scanner(System.in);
-String aStr = scan.next();
+String aStr = scan.next(); 
 String bStr = scan.next();
 
 BigInteger a = new BigInteger(aStr);
@@ -62,6 +62,38 @@ public static String findDay(int month, int day, int year) {
     return dateFormat.format(calendar.getTime()).toUpperCase();
 
 }
+```
+
+## Exceptions
+
+``` java
+class MyCalculator {
+    /*
+    * Create the method long power(int, int) here.
+    */
+    public static long power(int n, int p) throws Exception
+    {
+        if (n == 0 && p == 0)
+            throw new Exception("n and p should not be zero.");
+
+        if (n < 0 || p < 0)
+            throw new Exception("n or p should not be negative.");
+        
+        return (long)Math.pow(n,p);
+    }
+}
+
+void main() {
+    try {
+        System.out.println(my_calculator.power(n, p));
+    } catch (Exception e) {
+        System.out.println(e);
+    }
+}
+// OUTPUT:
+// 16
+// java.lang.Exception: n and p should not be zero.
+// java.lang.Exception: n or p should not be negative.
 ```
 
 ## Input Scanner
