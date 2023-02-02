@@ -344,6 +344,42 @@ vector<string> split(string s, string delimiter) {
 }
 ```
 
+## String
+
+### std::string
+
+```cpp
+#include <string>
+
+std::string myString("initialValue");
+```
+
+### Narrow String Literal
+
+```cpp
+char* pszStr = "Hello, world!";
+```
+
+- A `narrow string literal` is a string literal in `C++` that is `not prefixed` with `L`, such as "hello".
+- A narrow string literal represents a string of narrow characters, which are typically a single byte each and are used to represent characters in the default character set of the system.
+- On systems using the ASCII character set, the narrow characters have the same values as the corresponding ASCII characters, but on systems using other character sets, the values of the characters can be different.
+- Narrow string literals are typically used to represent strings of text in the default character set of the system.
+- In this example
+  - `"Hello, world!"` is a `narrow string literal` and `pszStr` is a pointer to a `narrow character string` that points to the beginning of the string literal.
+  - The `string literal` is `stored` in a `read-only section of memory`, and the `pointer pszStr` can be used to access the characters in the string.
+  - Note that the `string literal is null-terminated`, meaning that the end of the string is marked by a `null character` with a `value` of `0`.
+
+### Wide String Literal
+
+```cpp
+WCHAR* pwszConnStr = NULL;
+pwszConnStr[0] = L'\0';
+```
+
+- The `L` before the string literal in L'\0' indicates that it's a wide string literal, rather than a narrow string literal.
+- In `C++`, `wide string literals` are `prefixed` with `L`.
+- The wide string literal `L'\0'` represents a `single-character wide string` containing the `null terminator`, which is equivalent to L"\0" in this context. This is used to initialize an empty wide string.
+
 ## Stringstream
 
 ```cpp

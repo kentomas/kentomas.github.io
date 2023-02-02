@@ -30,8 +30,16 @@ void countApplesAndOranges(int s, int t, int a, int b, vector<int> apples, vecto
 }
 ```
 
-## Number Lines Jumps
+## Extra Long Factorials
 
 ```java
-
+public static void extraLongFactorials(int n) {
+    int currentFactor = n;
+    BigInteger answer = new BigInteger("1");
+    while (currentFactor != 0) {
+        answer = answer.multiply(BigInteger.valueOf(currentFactor));
+        currentFactor--;
+    }
+    System.out.println(answer);
+}
 ```
