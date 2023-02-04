@@ -11,5 +11,11 @@ Command Breakdown:
 === "PowerShell"
 
 ``` powershell linenums="1"
-PS> dir Env: \ | Out-String -stream | Select-String java
+dir Env: \ | Out-String -stream | Select-String java
+```
+
+## Print JAVA_HOME
+
+```powershell
+$env:JAVA_HOME
 ```
