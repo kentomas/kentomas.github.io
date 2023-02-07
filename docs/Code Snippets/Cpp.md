@@ -459,6 +459,59 @@ Other Resources:
 
 - <https://refactoring.guru/design-patterns/singleton/cpp/example>
 
+## Sorting
+
+Several collection types can be sorted, including:
+
+1. `std::vector`: A dynamic array that can store an arbitrary number of elements.
+2. `std::array`: A fixed-size array.
+3. `std::list`: A doubly linked list.
+4. `std::forward_list`: A singly linked list.
+5. `std::set`: An ordered set that contains unique elements.
+6. `std::multiset`: An ordered set that can store multiple instances of the same element.
+7. `std::map`: An ordered map that associates keys with values.
+8. `std::multimap`: An ordered map that can store multiple values for the same key.
+
+These collections can be sorted by using the std::sort algorithm. To sort other collection types, you may need to use a different sorting algorithm, or write a custom sorting function.
+
+```cpp
+#include <algorithm>
+#include <vector>
+#include <iostream>
+
+int main() {
+    std::vector<int> numbers = {3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5};
+    
+    std::sort(numbers.begin(), numbers.end());
+    
+    for (int number : numbers) {
+        std::cout << number << " ";
+    }
+    return 0;
+}
+```
+
+```cpp
+#include <vector>
+
+struct Workshop {
+  int start_time;
+  int duration;
+  int end_time;
+};
+
+bool compare_workshops(Workshop& w1, Workshop& w2) {
+  return w1.end_time - w2.end_time > 0;
+}
+
+int CalculateMaxWorkshops(Available_Workshops* ptr) {
+    vector<Workshop> workshops = ptr->workshops;
+    sort(workshops.begin(), workshops.end(), compare_workshops);
+
+    return 0;
+}
+```
+
 ## Split String
 
 ```cpp
