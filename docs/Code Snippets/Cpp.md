@@ -221,6 +221,8 @@ ostream& operator<<(ostream& os, const Date& dt)
 
 ## Overloading
 
+### Operator overloading
+
 ```cpp
 #include <iostream>
 
@@ -258,6 +260,39 @@ int main() {
 ```
 
 Source: <https://www.hackerrank.com/challenges/overloading-ostream-operator/problem?isFullScreen=true>
+
+```cpp
+
+//Overload operators + and << for the class complex
+//+ should add two complex numbers as (a+ib) + (c+id) = (a+c) + i(b+d)
+//<< should print a complex number in the format "a+ib"
+
+Complex operator +(Complex &c1, Complex &c2){
+    Complex c;
+    c.a = c1.a + c2.a;
+    c.b = c1.b + c2.b;
+    return c;
+}
+
+ostream &operator <<(ostream &out, Complex &c1){
+    out<<c1.a<<"+i"<<c1.b;
+    return out;
+}
+
+int main()
+{
+    Complex x,y;
+    string s1,s2;
+    cin>>s1;
+    cin>>s2;
+    x.input(s1);
+    y.input(s2);
+    Complex z=x+y;
+    cout<<z<<endl;
+}
+```
+
+Source: <https://www.hackerrank.com/challenges/overload-operators/problem?isFullScreen=true>
 
 ## Print to console
 
@@ -364,6 +399,51 @@ int main()
 std::set<int, std::greater> s;
 ```
 
+## Singleton
+
+Source: <https://stackoverflow.com/questions/1008019/c-singleton-design-pattern>
+
+```cpp
+class S
+{
+    public:
+        static S& getInstance()
+        {
+            static S    instance; // Guaranteed to be destroyed.
+                                  // Instantiated on first use.
+            return instance;
+        }
+    private:
+        S() {}                    // Constructor? (the {} brackets) are needed here.
+
+        // C++ 03
+        // ========
+        // Don't forget to declare these two. You want to make sure they
+        // are inaccessible(especially from outside), otherwise, you may accidentally get copies of
+        // your singleton appearing.
+        S(S const&);              // Don't Implement
+        void operator=(S const&); // Don't implement
+
+        // C++ 11
+        // =======
+        // We can use the better technique of deleting the methods
+        // we don't want.
+    public:
+        S(S const&)               = delete;
+        void operator=(S const&)  = delete;
+
+        // Note: Scott Meyers mentions in his Effective Modern
+        //       C++ book, that deleted functions should generally
+        //       be public as it results in better error messages
+        //       due to the compilers behavior to check accessibility
+        //       before deleted status
+};
+```
+
+Other Resources:
+
+- <https://refactoring.guru/design-patterns/singleton/cpp/example>
+
 ## Split String
 
 ```cpp
@@ -438,7 +518,10 @@ while (std::getstring(ss, sub_string, delimiter))
 ## Struct
 
 ```cpp
-
+struct Person {
+    std::string Name;
+    int         age;
+};
 ```
 
 ## Sub string
@@ -511,6 +594,11 @@ int main () {
 ### Template Class
 
 ```cpp
+template <class T>      // <-- "Class" keyword
+class AddElements {...}
+```
+
+```cpp hl_lines="10"
 #include <cmath>
 #include <cstdio>
 #include <vector>
