@@ -106,6 +106,48 @@ class BadLengthException : public std::exception {
 };
 ```
 
+## Locks
+
+### Lock Guard
+
+```cpp
+#include <thread>
+#include <mutex>
+#include <iostream>
+ 
+int g_i = 0;
+std::mutex g_i_mutex;  // protects g_i
+ 
+void safe_increment()
+{
+    const std::lock_guard<std::mutex> lock(g_i_mutex);
+    ++g_i;
+ 
+    std::cout << "g_i: " << g_i << "; in thread #"
+              << std::this_thread::get_id() << '\n';
+ 
+    // g_i_mutex is automatically released when lock
+    // goes out of scope
+}
+ 
+int main()
+{
+    std::cout << "g_i: " << g_i << "; in main()\n";
+ 
+    std::thread t1(safe_increment);
+    std::thread t2(safe_increment);
+ 
+    t1.join();
+    t2.join();
+ 
+    std::cout << "g_i: " << g_i << "; in main()\n";
+}
+```
+
+References:
+
+- <https://en.cppreference.com/w/cpp/thread/lock_guard>
+
 ## Long Long
 
 ```cpp
@@ -308,6 +350,22 @@ int main()
 ```
 
 Source: <https://www.hackerrank.com/challenges/overload-operators/problem?isFullScreen=true>
+
+## Power
+
+```cpp
+/* pow example */
+#include <stdio.h>      /* printf */
+#include <math.h>       /* pow */
+
+int main ()
+{
+  printf ("7 ^ 3 = %f\n", pow (7.0, 3.0) );
+  printf ("4.73 ^ 12 = %f\n", pow (4.73, 12.0) );
+  printf ("32.01 ^ 1.54 = %f\n", pow (32.01, 1.54) );
+  return 0;
+}
+```
 
 ## Print to console
 
@@ -774,6 +832,24 @@ int main()
 ```
 
 Source: <https://www.hackerrank.com/challenges/cpp-class-template-specialization/problem?isFullScreen=true>
+
+## Threads
+
+```cpp
+#include <iostream>
+#include <thread>
+
+void task() {
+    std::cout << "Hello from a thread!" << std::endl;
+}
+
+int main() {
+    std::thread t(task);  // Create and start a thread
+    std::cout << "Hello from main thread!" << std::endl;
+    t.join();  // Wait for the thread to finish
+    return 0;
+}
+```
 
 ## Try catch
 
