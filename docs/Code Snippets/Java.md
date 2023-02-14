@@ -33,6 +33,23 @@ class Main {
 }
 ```
 
+## Annotations
+
+The most common annotations used in Java are:
+
+| Annotation             | Description                                                                                                       |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `@Override`            | Indicates that a method in a subclass is intended to override a method in its superclass.                         |
+| `@Deprecated`          | Indicates that a class, method, or field should no longer be used, often because there is a better alternative.   |
+| `@SuppressWarnings`    | Suppresses compiler warnings for the annotated code.                                                              |
+| `@SafeVarargs`         | Indicates that a method with a variable number of arguments is safe to use with unchecked generic array creation. |
+| `@FunctionalInterface` | Indicates that an interface is intended to be a functional interface, which can be used with lambda expressions.  |
+| `@NonNull`             | Indicates that a parameter, return value, or field cannot be null.                                                |
+| `@Nullable`            | Indicates that a parameter, return value, or field can be null.                                                   |
+| `@Resource`            | Marks a class or field as a resource that should be managed by the container.                                     |
+| `@Component`           | Indicates that a class is a Spring component, which can be autodetected and used by the Spring framework.         |
+| @Autowired             | Injects a dependency into a Spring bean.                                                                          |
+
 ## Arrays
 
 ### Int Array
@@ -286,6 +303,28 @@ void main()
     ob.add(n1,n2,n3,n4,n5,n6);
 }
 ```
+
+## Functional Interface
+
+- Functional interfaces allow you to define a single method interface and then use lambda expressions or method references to implement that interface. This can be used to achieve similar functionality as delegates in other languages.
+
+```java
+@FunctionalInterface
+interface MyInterface {
+    void myMethod(int a, int b);
+}
+```
+
+This defines a functional interface named `MyInterface` with a single abstract method called `myMethod` that takes two integer parameters and has a return type of `void`.
+
+You can then use a lambda expression or a method reference to implement this interface, like so:
+
+```java
+MyInterface myLambda = (a, b) -> System.out.println(a + b);
+myLambda.myMethod(2, 3); // prints "5"
+```
+
+Here, we're creating an instance of the `MyInterface` interface using a lambda expression. The lambda expression takes two integer parameters a and b and adds them together, then prints the result to the console using `System.out.println()`. Finally, we're calling the `myMethod` method on the `myLambda` instance and passing in the values `2` and `3`, which results in the lambda expression being executed and printing `"5"` to the console.
 
 ## HashMap
 
