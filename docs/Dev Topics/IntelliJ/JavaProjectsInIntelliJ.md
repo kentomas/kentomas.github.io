@@ -24,8 +24,9 @@ Possible solutions:
 **Solution:**
 
 1. Change SDK for Module
-      1. `Right click` on `Module` > `Module Settings` > `Project Settings` > `Modules` > (Select Module) > Dependencies (Tab).
-      2. Change the `Module SDK` to `openjdk-19`.
+      1. `Right click` on `Module` > `Module Settings` > `Project Settings` > `Modules` > (Select Module)
+      2. Select `Dependencies` (Tab) > Change the `Module SDK` to `openjdk-19`.
+      3. Select `Sources` (Tab) > Change the `Language level` to `Project default` (which is `openjdk-19`).
 2. Change Compiler Byte Code for Module.
       1. `File` > `Settings` > `Build, Execution, Deployment` > `Compiler` > `Java Compiler`.
       2. Under `per-module bytecode version`, select `Module` and change the `Target bytecode version` to `openjdk-19`.
