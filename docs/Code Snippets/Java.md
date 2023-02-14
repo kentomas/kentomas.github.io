@@ -102,6 +102,28 @@ System.out.println(sum);
 System.out.println(mult);
 ```
 
+## Comparators
+
+In Java, you **cannot override** the **comparison operators** (`<`, `>`, `<=`, `>=`) for **user-defined classes**. These operators are only applicable to primitive types and some built-in classes, like `String`.
+
+Instead, if you want to define a custom comparison for your own classes, you must `implement` the `java.util.Comparator` `interface` and provide an implementation of the `compare` method. This method takes two objects of the type you want to compare, and returns an integer value that represents their relative order.
+
+By implementing the `Comparator` interface, you can create a separate class that encapsulates the comparison logic and can be used with sorting algorithms like `Arrays.sort` or `Collections.sort`. This has the advantage of keeping the sorting logic separate from the `Person` class, making it easier to change the sort order or use different sorts with the same `Person` objects.
+
+```java title="Declaration"
+class NameComparator implements Comparator<Person> {
+    @Override
+    public int compare(Person a, Person b) {
+        return a.getName().compareTo(b.getName());
+    }
+}
+```
+
+```java title="Usage"
+Person[] people = { new Person("Alice", 25), new Person("Bob", 30), new Person("Charlie", 20) };
+Arrays.sort(people, new NameComparator());
+```
+
 ## Conversions
 
 ### String to Int
