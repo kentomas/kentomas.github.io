@@ -599,6 +599,31 @@ class Whatever {
 }
 ```
 
+## Stream API
+
+In Java, the equivalent of LINQ in C# is the Stream API.
+
+```java
+List<String> names = Arrays.asList("John", "Jane", "Bob", "Alice");
+
+List<String> filteredNames = names.stream()
+    .filter(name -> name.startsWith("J"))
+    .map(String::toUpperCase)
+    .collect(Collectors.toList());
+    
+System.out.println(filteredNames); // Output: [JOHN, JANE]
+
+```
+
+In this example:
+
+1. We first create a list of names.
+2. We then create a stream from the list using the `stream()` method.
+3. We then use the `filter()` method to filter the names that start with the letter `"J"`.
+4. We then use the `map()` method to convert the filtered names to uppercase.
+5. Finally, we use the `collect()` method to collect the filtered and transformed names into a new list.
+6. The output of the program is the list containing the names "JOHN" and "JANE".
+
 ## Synchronized
 
 ```java
