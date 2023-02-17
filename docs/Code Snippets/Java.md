@@ -516,6 +516,16 @@ else
 }
 ```
 
+## Regions
+
+```java
+//region Description
+
+Some code
+
+//endregion
+```
+
 ## Scanner
 
 ```java
