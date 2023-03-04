@@ -17,6 +17,7 @@
 | `Ctrl` + `Shift` + `F8` | View breakpoints                                                           |
 | `Ctrl` + `Shift` + `F9` | Debug configurations menu                                                  |
 | `Alt` + `Enter`         | Show suggested options (Alternative `ctrl` + `.` in VS)                    |
+| `Ctrl` + `Alt` + `L`    | Format File                                                                |
 
 ## Other Operations
 
