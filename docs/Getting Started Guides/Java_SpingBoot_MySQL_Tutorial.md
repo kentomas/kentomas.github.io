@@ -50,7 +50,7 @@
         1. `Login Name`: springuser
         2. `Authentication Type`: Standard
         3. `Limit to Hosts Matching`: %
-        4. `Password`: some-password
+        4. `Password`: ###########
         5. Schema Privileges
             1. Click on `Add Entry` button.
                 1. `Selected schema`: db_example
