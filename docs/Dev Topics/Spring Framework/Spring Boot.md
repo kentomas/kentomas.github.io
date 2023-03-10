@@ -57,3 +57,13 @@ In this example:
         - If you are using `PostgreSQL`, Hibernate will use the `SEQUENCE` `strategy`, which relies on a sequence to generate primary key values.
         - Using `GenerationType.AUTO` is convenient because it allows you to write database-independent code that will work with different databases.
 - The `name` and `email` fields map to columns in the users table.
+
+## Controllers
+
+- Both `@Controller` and `@RestController` are used to indicate that a particular class is a controller in a Spring Boot application.
+- However, the main difference between the two annotations is that `@RestController` is a convenience annotation that combines `@Controller` and `@ResponseBody`.
+- This means that if you annotate a class with `@RestController`, all of its methods will return the response directly in the form of JSON, XML, or any other format that is specified by the HTTP request.
+- On the other hand, if you use `@Controller`, you need to explicitly annotate the methods with `@ResponseBody` to return the response in the desired format.
+- Therefore, if you are building an API that returns data in JSON or XML format, it is recommended to use @RestController. If you are building a more traditional web application that returns HTML views, you can use @Controller.
+
+In summary, use `@RestController` for building APIs that return data, and `@Controller` for building web applications that return `views`.
