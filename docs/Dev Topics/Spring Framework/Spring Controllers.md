@@ -82,6 +82,8 @@ public class UserController {
 
 ### Sample UserController
 
+#### Simple UserController
+
 In this example, we have a `UserController` that handles requests to `/users`. The controller uses a `UserService` instance to retrieve the list of users and a specific user by their ID.
 
 - The `@RestController` annotation indicates that this class is a Spring MVC controller and that each of its methods will return a response body that can be serialized into JSON or XML. The `@RequestMapping` annotation specifies the base URL that this controller will handle.
@@ -112,6 +114,60 @@ public class UserController {
 - `http://localhost:8080/users` - This will return `getUsers()`.
 - `http://localhost:8080/users/1` - This will return the user with `id` = `1`.
     - `http://localhost:8080/users/{id}` - The function `getUserById(..)` is expecting a value in the URI `path`.
+
+#### Advanced UserController
+
+When it comes to annotating Spring Controller methods, the following annotations are commonly used:
+
+- `@Controller` - This annotation is used to mark a class as a Spring Controller. It is typically used at the class level.
+- `@RequestMapping` - This annotation is used to map a URL pattern to a method or a class. It is typically used at the method level.
+- `@GetMapping`, `@PostMapping`, `@PutMapping`, `@DeleteMapping` - These annotations are shortcuts for @RequestMapping with the corresponding HTTP method.
+- `@PathVariable` - This annotation is used to map a URL variable to a method parameter.
+- `@RequestParam` - This annotation is used to map a query parameter to a method parameter.
+- `@RequestBody` - This annotation is used to map the request body to a method parameter.
+- `@ResponseBody` - This annotation is used to map the method return value to the response body.
+- `@ResponseStatus` - This annotation is used to set the HTTP response status code.
+- `@ExceptionHandler` - This annotation is used to define methods that handle exceptions thrown by the controller methods.
+
+Here's an example of how these annotations can be used in a Spring Controller:
+
+```java title="UserController.cs"
+@Controller
+@RequestMapping("/users")
+public class UserController {
+
+    @Autowired
+    private UserService userService;
+
+    @GetMapping("/{id}")
+    @ResponseBody
+    public User getUserById(@PathVariable("id") Long id) {
+        return userService.getUserById(id);
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
+    public User createUser(@RequestBody User user) {
+        return userService.createUser(user);
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseBody
+    public ErrorResponse handleUserNotFoundException(UserNotFoundException ex) {
+        return new ErrorResponse(ex.getMessage());
+    }
+}
+```
+
+In this example, we have annotated the class with `@Controller` and `@RequestMapping("/users")`, which means that all the methods in this class handle requests with the `/users` prefix.
+
+We have also annotated the `getUserById()` method with `@GetMapping("/{id}")` and `@ResponseBody`, which means that this method handles `GET` requests with a path variable named `id` and returns a `User` object as the response body.
+
+The `createUser()` method is annotated with `@PostMapping`,`@ResponseStatus(HttpStatus.CREATED)`, and `@ResponseBody`, which means that this method handles `POST` requests, returns a User object as the response body, and sets the `HTTP status code` to `201 (Created)`.
+
+Finally, we have annotated the `handleUserNotFoundException()` method with `@ExceptionHandler(UserNotFoundException.class)` and `@ResponseStatus(HttpStatus.NOT_FOUND)`, which means that this method handles exceptions of type `UserNotFoundException` and sets the `HTTP status code` to `404 (Not Found)`.
 
 ## Dealing with Path Variables
 
