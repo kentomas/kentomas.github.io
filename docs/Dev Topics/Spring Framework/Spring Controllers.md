@@ -174,3 +174,33 @@ public User getUserById(@PathVariable Long id, @RequestParam(name = "name", requ
     }
 }
 ```
+
+## Returning ResponseEntity
+
+In Java Spring, you should return a `ResponseEntity` when you need to have more control over the HTTP response that is sent back to the client.
+
+Here are some scenarios where you might want to return a `ResponseEntity`:
+
+1. When you `need to set the HTTP status code`: By `default`, Spring will set the `HTTP status code` to `200` `OK`. If you need to return a different status code, you can use the ResponseEntity to set it explicitly.
+2. When you `need to add headers to the response`: You can use the ResponseEntity to add headers to the HTTP response.
+3. When you `need to return a specific response body`: The ResponseEntity allows you to set the response body to any object, not just a string or a view. This can be useful when returning JSON or XML responses.
+4. When you `need to return a custom error response`: If an error occurs in your application, you may want to return a custom error response to the client. The ResponseEntity allows you to set the HTTP status code and response body for error responses.
+
+Here's an example of how to use `ResponseEntity` to return a custom response:
+
+```java title="UserController.java"
+@RestController
+class public UserController {
+
+    @GetMapping("/users/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+        User user = userService.getUserById(id);
+        if (user == null) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(user);
+        }
+    }
+}
+
+```
