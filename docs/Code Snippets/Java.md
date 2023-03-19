@@ -144,6 +144,51 @@ System.out.println(s+100);//200100 because + is string concatenation operator
 }}
 ```
 
+### POJO to JSON
+
+Converting a Plain Old Java Object (POJO) to a JSON object requires the project dependency on `GSON`:
+
+```xml title="application.properties"
+<dependencies>
+  <dependency>
+    <groupId>com.google.code.gson</groupId>
+    <artifactId>gson</artifactId>
+    <version>2.10.1</version>
+  </dependency>
+</dependencies>
+```
+
+```java title="Person.java"
+public class Person {
+    private String name;
+    private int age;
+
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+}
+```
+
+```java title="POJO to JSON"
+Person person = new Person("John Doe", 25);
+Gson gson = new Gson();
+String json = gson.toJson(person);
+```
+
+```java title="JSON to POJO"
+String json = "{\"name\":\"John Doe\",\"age\":25}";
+Person person = gson.fromJson(json, Person.class);
+```
+
 ## Datetime
 
 ```java
