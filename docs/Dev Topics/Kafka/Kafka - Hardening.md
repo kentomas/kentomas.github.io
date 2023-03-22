@@ -4,7 +4,7 @@ There is no one-size-fits-all hardened Kafka configuration, as the optimal confi
 
 1. Enable SSL encryption for all communication between clients and brokers.
 
-    ```yaml
+    ```java
     listeners=PLAINTEXT://localhost:9092,SSL://localhost:9093
     security.inter.broker.protocol=SSL
     ssl.keystore.location=/path/to/server.keystore.jks
@@ -15,14 +15,14 @@ There is no one-size-fits-all hardened Kafka configuration, as the optimal confi
 
 2. Set up authentication and authorization for all clients and brokers. Use a strong authentication mechanism, such as Kerberos or SSL/TLS client certificates.
 
-    ```yaml
+    ```java
     authorizer.class.name=kafka.security.auth.SimpleAclAuthorizer
     super.users=User:admin
     ```
 
 3. Configure a custom log.retention.bytes and log.retention.hours to limit the maximum size and age of logs, respectively.
 
-    ```yaml
+    ```java
     log.retention.bytes=1073741824
     log.retention.hours=168
     ```
@@ -31,7 +31,7 @@ There is no one-size-fits-all hardened Kafka configuration, as the optimal confi
 
 5. Disable auto.create.topics.enable and create topics manually with appropriate settings, such as partition count and replication factor.
 
-    ```yaml
+    ```java
     auto.create.topics.enable=false
     ```
 
@@ -39,7 +39,7 @@ There is no one-size-fits-all hardened Kafka configuration, as the optimal confi
 
 7. Configure your brokers to log all authentication and authorization events, as well as all administrative actions, for auditing purposes.
 
-    ```perl
+    ```java
     log4j.logger.kafka.authorizer.logger=INFO, authorizerAppender
     log4j.additivity.kafka.authorizer.logger=false
     log4j.appender.authorizerAppender=org.apache.log4j.DailyRollingFileAppender
