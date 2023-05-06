@@ -4,8 +4,14 @@
 
 | Shortcut                | Description                                                                |
 | ----------------------- | -------------------------------------------------------------------------- |
+| **GENERAL**             |                                                                            |
 | `Ctrl` + `F9`           | Build.                                                                     |
 | `Shift` + `F9`          | Debug.                                                                     |
+| `Ctrl` + `Alt` + `L`    | Format File                                                                |
+| `Alt` + `Enter`         | Show suggested options (Alternative `ctrl` + `.` in VS)                    |
+| **DEPENDENCIES**        |                                                                            |
+| `Ctrl` + `Shift` + `O`  | Reload maven packages                                                      |
+| **DEBUGGING**           |                                                                            |
 | `F9`                    | Resume program execution                                                   |
 | `F8`                    | Step over to the next line of code                                         |
 | `F7`                    | Step into a method call                                                    |
@@ -16,8 +22,6 @@
 | `Ctrl` + `F8`           | Toggle breakpoint                                                          |
 | `Ctrl` + `Shift` + `F8` | View breakpoints                                                           |
 | `Ctrl` + `Shift` + `F9` | Debug configurations menu                                                  |
-| `Alt` + `Enter`         | Show suggested options (Alternative `ctrl` + `.` in VS)                    |
-| `Ctrl` + `Alt` + `L`    | Format File                                                                |
 
 ## Other Operations
 
