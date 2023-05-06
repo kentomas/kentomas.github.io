@@ -54,3 +54,36 @@ int age = person.getAge();
 ```
 
 `JavaBeans` are commonly used in graphical user interface (GUI) programming, such as in Java Swing or JavaFX, to represent various GUI components, such as buttons, labels, text fields, and so on. By using JavaBeans to encapsulate these GUI components, you can manipulate them visually in a builder tool and easily pass them around and manipulate them as a single unit in your Java code.
+
+## Class Control Access
+
+In Java, you can control access to classes, methods, and fields using access modifiers such as `public`, `private`, `protected`, and `default`.
+
+To prevent a class in your library from being accessed by another application that uses your library, you can make the class `private` or `package-private` (also known as default access).
+
+- A `private` class `can only be accessed within the same class` in which it is declared.
+- A `package-private` class `can be accessed by other classes in the **same package**`, but not by classes in other packages.
+
+Here's an example of how to make a class private:
+
+```java title="Private Class"
+// FILENAME: MyPublicClass.java
+public class MyPublicClass {
+    private class MyClass {
+        // class code here
+    }
+}
+```
+
+And here's an example of how to make a class package-private:
+
+```java title="Package-private Class"
+// FILENAME: MyClass.java
+class MyClass {
+    // class code here
+}
+```
+
+By default, a class that doesn't have any access modifier is `package-private`.
+
+Note that making a class private or package-private can affect the usability of your library, as other classes in your library may need to access that class. In general, it's best to make only the parts of your library that you want to hide `private` or `package-private`, and make the rest `public` or `protected`.
