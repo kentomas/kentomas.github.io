@@ -33,6 +33,9 @@ DNS.2 = www.mycompany.local
 # Generate the self-signed certificate
 openssl req -new -x509 -key private.key -out certificate.crt -days 365 -config openssl.cnf -extensions v3_ca
 
+# Generate PKCS#12 file
+openssl pkcs12 -export -out certificate.pfx -inkey private.key -in certificate.crt -certfile certificate.crt -passout pass:***** -passin pass:*****
+
 # Clean up the configuration file
 Remove-Item -Path "openssl.cnf"
 
